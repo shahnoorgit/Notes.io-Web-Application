@@ -4,10 +4,12 @@ import { connectDB } from "./DB/connectDB.js";
 import dotenv from "dotenv";
 import authRoutes from "./Routes/auth.route.js";
 import NotesRoute from "./Routes/Notes.route.js";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use(cookieParser());
 
 app.listen("5000", () => {
