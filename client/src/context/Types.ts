@@ -1,5 +1,5 @@
 export interface GloablAuth {
   userName: string;
-  id: string;
+  _id: string;
   FullName: string;
 }

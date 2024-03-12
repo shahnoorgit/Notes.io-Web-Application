@@ -22,7 +22,7 @@ export const signup = async (req, res) => {
     fullName,
     userName,
     password: hashedPassword,
-    confirmPassword,
+    confirmPassword: hashedPassword,
   });
 
   if (newUser) {
@@ -59,7 +59,7 @@ export const login = async (req, res) => {
   if (user && isPassword) {
     generateTokenandsetCookie(user._id, res);
     res.status(200).json({
-      id: user._id,
+      _id: user._id,
       userName: user.userName,
       fullName: user.fullName,
     });

@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Target the scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the scrollbar width */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #333; /* Dark background for the track */
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #555; /* Slightly lighter shade for the thumb */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+/* Optional: Adjust hover effect for better contrast */
+::-webkit-scrollbar-thumb:hover {
+  background: #666; /* Slightly lighten on hover */
+}

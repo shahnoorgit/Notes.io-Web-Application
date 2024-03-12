@@ -19,7 +19,7 @@ export const AuthUserProvider = createContext<Context>({
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authUser, setAuthUser] = useState<GloablAuth>(
     JSON.parse(localStorage.getItem("chat-user")!) || {
-      id: "",
+      _id: "",
       FullName: "",
       userName: "",
     }

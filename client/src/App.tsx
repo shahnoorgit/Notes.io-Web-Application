@@ -13,16 +13,16 @@ function App() {
         <Route
           path="/"
           element={
-            authUser.id.length > 1 ? <Home /> : <Navigate to={"/sign-up"} />
+            authUser?._id.length > 1 ? <Home /> : <Navigate to={"/sign-up"} />
           }
         />
         <Route
           path="/sign-up"
-          element={authUser.id.length > 1 ? <Navigate to={"/"} /> : <Signup />}
+          element={authUser._id.length > 1 ? <Navigate to={"/"} /> : <Signup />}
         />
         <Route
           path="/login"
-          element={authUser.id.length > 1 ? <Navigate to={"/"} /> : <Login />}
+          element={authUser._id.length > 1 ? <Navigate to={"/"} /> : <Login />}
         />
       </Routes>
       <Toaster />
