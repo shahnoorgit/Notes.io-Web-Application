@@ -21,3 +21,11 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #666; /* Slightly lighten on hover */
 }
+
+.card {
+  transition: transform ease-in-out 0.2s; /* Animation setup */
+  transform: translateY(0); /* Initial position: no movement */
+}
+.card:hover {
+  transform: translateY(-10px); /* Move the card 10px upwards on hover */
+}

@@ -4,7 +4,7 @@ export type fetchedNotesType = [
     madeby?: unknown;
     title: string;
     body: string;
-    createdAt: string;
+    createdAt?: string;
     updatedAt?: unknown;
     __v?: unknown;
   }
