@@ -1,23 +1,50 @@
-import React from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdOutlineDoneOutline } from "react-icons/md";
 
 import { UpdateType } from "./NotesCon";
+import { CreateNote } from "../types/Notes";
+
 interface NotePageProps {
   updateINFO: UpdateType;
+  setNote: React.Dispatch<React.SetStateAction<object[]>>;
   setUpdateInfo: (
     value: React.SetStateAction<{
       title: string;
       body: string;
-      _id?: string;
+      _id: string;
     }>
   ) => void;
   setPage: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const NotePage = ({ setPage, updateINFO, setUpdateInfo }: NotePageProps) => {
+const NotePage = ({
+  setPage,
+  updateINFO,
+  setUpdateInfo,
+  setNote,
+}: NotePageProps) => {
   const close = () => {
-    setUpdateInfo({ title: "", body: "" });
+    setUpdateInfo({ title: "", body: "", _id: "" });
     setPage(false);
+  };
+
+  const AddNew = () => {
+    const createNote = async ({ title, body, _id }: CreateNote) => {
+      try {
+        const res = await fetch("/api/users/notes/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, body, _id }),
+        });
+        const data = await res.json();
+        console.log(data);
+        setNote((prevNotes) => [data, ...prevNotes]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    createNote(updateINFO);
+    setUpdateInfo({ title: "", body: "", _id: "" });
+    close();
   };
   return (
     <div className="bg-gray-900 p-10 w-screen h-full top-0 absolute flex flex-col">
@@ -25,7 +52,7 @@ const NotePage = ({ setPage, updateINFO, setUpdateInfo }: NotePageProps) => {
         <button onClick={() => close()}>
           <IoMdArrowRoundBack className=" text-3xl" />
         </button>
-        <button>
+        <button onClick={() => AddNew()}>
           <MdOutlineDoneOutline className=" text-3xl" />
           Done
         </button>

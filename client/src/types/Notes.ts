@@ -9,3 +9,9 @@ export type fetchedNotesType = [
     __v?: unknown;
   }
 ];
+
+export type CreateNote = {
+  _id: unknown;
+  title: string;
+  body: string;
+};

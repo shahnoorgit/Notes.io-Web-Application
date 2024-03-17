@@ -1,16 +1,36 @@
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import NotesCon from "../Components/NotesCon";
 import Search from "../Components/Search";
-
-import useFetchNotes from "../Hooks/useFetchNotes";
+import toast from "react-hot-toast";
+import { AuthUserProvider } from "../context/AuthContext";
 
 const Home = () => {
-  const { FetchNotes, Loading } = useFetchNotes();
+  const [FetchedNote, setFetchedNote] = useState([{}]);
+  const { authUser } = useContext(AuthUserProvider);
+  const { _id } = authUser;
+  const [Loading, setLoading] = useState(false);
   useEffect(() => {
-    FetchNotes();
-  }, []);
+    const FetchNotes = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/users/notes/fetch/${_id}`);
+        const data = await res.json();
+        if (data.error) {
+          toast.error(data.error);
+          throw new Error(data.error);
+        }
 
+        setFetchedNote(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    FetchNotes();
+  }, [setFetchedNote]);
+  console.log("Home", FetchedNote);
   return (
     <>
       <div className=" text-white">
@@ -20,7 +40,7 @@ const Home = () => {
           {Loading ? (
             <span className="  mt-60 loading loading-bars loading-lg" />
           ) : (
-            <NotesCon />
+            <NotesCon Data={FetchedNote} setNote={setFetchedNote} />
           )}
         </div>
       </div>

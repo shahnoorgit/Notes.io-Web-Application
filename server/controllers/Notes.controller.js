@@ -27,9 +27,10 @@ export const createNotes = async (req, res) => {
 export const fetchNotes = async (req, res) => {
   try {
     const { id: userId } = req.params;
-    const notes = await Notes.find({ madeby: userId });
+    const notes = await Notes.find({ madeby: userId }).sort({ createdAt: -1 });
+
     if (notes.length == 0) {
-      return res.status(201).json({ message: "You dont have any notes" });
+      return res.status(201).json([]);
     }
     res.status(200).json(notes);
   } catch (error) {

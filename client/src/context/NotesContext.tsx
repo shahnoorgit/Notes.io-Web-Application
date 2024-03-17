@@ -12,6 +12,7 @@ interface NotesContextProps {
 export const NotesProvider = createContext<Context>({
   FetchedNotes: [
     {
+      _id: "",
       title: "",
       body: "",
       createdAt: "",
@@ -22,6 +23,7 @@ export const NotesProvider = createContext<Context>({
 export const NotesContext = ({ children }: NotesContextProps) => {
   const [FetchedNotes, setFetchedNotes] = useState<fetchedNotesType>([
     {
+      _id: "",
       title: "",
       body: "",
       createdAt: "",

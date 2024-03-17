@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { NotesProvider } from "../context/NotesContext";
 
 const useFetchNotes = () => {
-  const { setFetchedNotes } = useContext(NotesProvider);
+  const { setFetchedNotes, FetchedNotes } = useContext(NotesProvider);
   const { authUser } = useContext(AuthUserProvider);
   const { _id } = authUser;
   const [Loading, setLoading] = useState(false);
@@ -18,6 +18,7 @@ const useFetchNotes = () => {
         toast.error(data.error);
         throw new Error(data.error);
       }
+
       setFetchedNotes(data);
     } catch (error) {
       console.log(error);
@@ -25,7 +26,7 @@ const useFetchNotes = () => {
       setLoading(false);
     }
   };
-  return { Loading, FetchNotes };
+  return { Loading, FetchNotes, FetchedNotes };
 };
 
 export default useFetchNotes;
