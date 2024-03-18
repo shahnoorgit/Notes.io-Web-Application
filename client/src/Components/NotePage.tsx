@@ -23,11 +23,16 @@ const NotePage = ({
   setNote,
 }: NotePageProps) => {
   const close = () => {
-    setUpdateInfo({ title: "", body: "", _id: "" });
+    setUpdateInfo((prevInfo) => ({
+      ...prevInfo,
+      title: "", // Blank title
+      body: "", // Blank body
+    }));
     setPage(false);
   };
 
   const AddNew = () => {
+    console.log(updateINFO);
     const createNote = async ({ title, body, _id }: CreateNote) => {
       try {
         const res = await fetch("/api/users/notes/create", {
@@ -36,14 +41,14 @@ const NotePage = ({
           body: JSON.stringify({ title, body, _id }),
         });
         const data = await res.json();
-        console.log(data);
+        console.log("fetchedData", data);
         setNote((prevNotes) => [data, ...prevNotes]);
+        console.log("ID", data);
       } catch (error) {
         console.log(error);
       }
     };
     createNote(updateINFO);
-    setUpdateInfo({ title: "", body: "", _id: "" });
     close();
   };
   return (

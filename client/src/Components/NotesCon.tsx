@@ -47,6 +47,7 @@ const NotesCon = ({ Data, setNote }: NotesPageProp) => {
             {" "}
             {Data.map((note) => (
               <Card
+                setNote={setNote}
                 handleUpdate={handleUpdateNote}
                 note={note}
                 setPage={setPage}

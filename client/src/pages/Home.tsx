@@ -10,25 +10,25 @@ const Home = () => {
   const { authUser } = useContext(AuthUserProvider);
   const { _id } = authUser;
   const [Loading, setLoading] = useState(false);
-  useEffect(() => {
-    const FetchNotes = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/users/notes/fetch/${_id}`);
-        const data = await res.json();
-        if (data.error) {
-          toast.error(data.error);
-          throw new Error(data.error);
-        }
-
-        setFetchedNote(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+  const FetchNotes = async (_id: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/users/notes/fetch/${_id}`);
+      const data = await res.json();
+      if (data.error) {
+        toast.error(data.error);
+        throw new Error(data.error);
       }
-    };
-    FetchNotes();
+
+      setFetchedNote(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    FetchNotes(_id);
   }, [setFetchedNote]);
   console.log("Home", FetchedNote);
   return (

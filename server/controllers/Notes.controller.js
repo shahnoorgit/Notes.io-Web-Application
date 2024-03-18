@@ -8,7 +8,7 @@ export const createNotes = async (req, res) => {
   });
 
   if (newNote) {
-    newNote
+    await newNote
       .save()
       .then((note) => {
         console.log("new Note created");
@@ -18,9 +18,9 @@ export const createNotes = async (req, res) => {
       });
 
     res.status(200).json({
-      _id,
-      title,
-      body,
+      _id: newNote._id,
+      title: newNote.title,
+      body: newNote.body,
     });
   }
 };
@@ -37,4 +37,13 @@ export const fetchNotes = async (req, res) => {
     res.status(500).json({ error: "error while fetching Notes" });
     console.log(error);
   }
+};
+
+export const DeleteNoteById = async (req, res) => {
+  const { _id } = req.body;
+  const deleteItem = await Notes.findByIdAndDelete(_id);
+  if (!deleteItem) {
+    return res.status(400).json({ error: "Note Not Found" });
+  }
+  res.status(200).json({ message: "Deleted Sucessfully" });
 };
