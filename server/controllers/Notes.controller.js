@@ -21,6 +21,7 @@ export const createNotes = async (req, res) => {
       _id: newNote._id,
       title: newNote.title,
       body: newNote.body,
+      createdAt: newNote.createdAt,
     });
   }
 };
@@ -46,4 +47,17 @@ export const DeleteNoteById = async (req, res) => {
     return res.status(400).json({ error: "Note Not Found" });
   }
   res.status(200).json({ message: "Deleted Sucessfully" });
+};
+
+export const UpdateNotes = async (req, res) => {
+  const { title, body, _id } = req.body;
+  const updateItem = await Notes.findByIdAndUpdate(
+    _id,
+    { title, body },
+    { new: true }
+  );
+  if (!updateItem) {
+    return res.status(400).json({ error: "item not found" });
+  }
+  res.status(200).json(updateItem);
 };

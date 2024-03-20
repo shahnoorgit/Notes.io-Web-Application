@@ -3,6 +3,9 @@ import { MdOutlineDoneOutline } from "react-icons/md";
 
 import { UpdateType } from "./NotesCon";
 import { CreateNote } from "../types/Notes";
+import { useContext } from "react";
+import { AuthUserProvider } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 interface NotePageProps {
   updateINFO: UpdateType;
@@ -22,17 +25,35 @@ const NotePage = ({
   setUpdateInfo,
   setNote,
 }: NotePageProps) => {
+  const { authUser } = useContext(AuthUserProvider);
+
   const close = () => {
     setUpdateInfo((prevInfo) => ({
       ...prevInfo,
       title: "", // Blank title
-      body: "", // Blank body
+      body: "",
+      _id: " ", // Blank body
     }));
     setPage(false);
   };
 
   const AddNew = () => {
-    console.log(updateINFO);
+    console.log(updateINFO._id);
+    console.log("iddd");
+    const FetchNotes = async (_id: string) => {
+      try {
+        const res = await fetch(`/api/users/notes/fetch/${_id}`);
+        const data = await res.json();
+        if (data.error) {
+          toast.error(data.error);
+          throw new Error(data.error);
+        }
+
+        setNote(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const createNote = async ({ title, body, _id }: CreateNote) => {
       try {
         const res = await fetch("/api/users/notes/create", {
@@ -48,9 +69,33 @@ const NotePage = ({
         console.log(error);
       }
     };
-    createNote(updateINFO);
+
+    const UpdateNote = async ({ title, body, _id }: CreateNote) => {
+      try {
+        const res = await fetch("/api/users/notes/update", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, body, _id }),
+        });
+        const data = await res.json();
+        console.log("fetchedData", data);
+        setNote((prevNotes) => [data, ...prevNotes]);
+        console.log("ID", data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (updateINFO._id == " ") {
+      UpdateNote(updateINFO);
+      console.log("up");
+    } else {
+      createNote(updateINFO);
+      console.log("Create");
+    }
+
     close();
   };
+  console.log(updateINFO);
   return (
     <div className="bg-gray-900 p-10 w-screen h-full top-0 absolute flex flex-col">
       <div className=" flex items-center justify-between mt-2 px-10">

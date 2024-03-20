@@ -26,6 +26,7 @@ const NotesCon = ({ Data, setNote }: NotesPageProp) => {
   });
   const handleUpdateNote = ({ body, title, _id }: UpdateType) => {
     setUpdatePage({ title, body, _id });
+    console.log(UpdatePage);
     setPage(true);
   };
 
