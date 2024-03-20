@@ -9,5 +9,4 @@
 - **Responsive Design**: Access your notes seamlessly across various devices.
 - **Search Functionality**: Quickly find the notes you need with the search feature.
 - **Tags**: Organize your notes using tags for better categorization.
-- **Share Notes**: Collaborate with others by sharing your notes.
 - **Dark Mode**: Enable dark mode for comfortable note-taking in low-light environments.
